@@ -24,17 +24,57 @@ class CustomContainer @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        // TODO
-        // ...
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        // TODO
-        // ...
+        super.onLayout(changed, left, top, right, bottom)
     }
 
     override fun addView(child: View) {
-        // TODO
-        // ...
+        if (childCount >= 2) {
+            throw IllegalStateException("Cannot add more 2 views")
+        }
+
+        try {
+            super.addView(child)
+            post { animate(child) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun animate(child: View) {
+
+
+        val startPosition = height / 2f
+
+        child.alpha = 0f
+        child.translationY = startPosition
+
+        if (child == getChildAt(0)){
+            child.animate()
+                .translationY(0f)
+                .setDuration(5000)
+                .withStartAction {
+                    child.animate()
+                        .alpha(1f)
+                        .setDuration(1000)
+                        .start()
+                }
+                .start()
+        }
+        if (child == getChildAt(1)){
+            child.animate()
+                .translationY(height.toFloat() - child.height.toFloat())
+                .setDuration(5000)
+                .withStartAction {
+                    child.animate()
+                        .alpha(1f)
+                        .setDuration(1000)
+                        .start()
+                }
+                .start()
+        }
+
     }
 }
