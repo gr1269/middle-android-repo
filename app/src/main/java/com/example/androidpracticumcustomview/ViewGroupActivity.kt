@@ -1,5 +1,6 @@
 package com.example.androidpracticumcustomview
 
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +11,8 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.util.TypedValueCompat.dpToPx
+import androidx.core.util.TypedValueCompat.spToPx
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.androidpracticumcustomview.ui.theme.CustomContainer
@@ -24,11 +27,17 @@ class ViewGroupActivity : ComponentActivity() {
         val customContainer = CustomContainer(this)
         setContentView(customContainer)
 
+        val metrics = Resources.getSystem().displayMetrics
+
         val firstView = TextView(this).apply {
             text = "First Child"
             setTextColor(Color.BLACK)
-            setPadding(16, 16, 16, 16)
-            textSize = 18f
+            setPadding(
+                dpToPx(16f,metrics).toInt(),
+                dpToPx(16f,metrics).toInt(),
+                dpToPx(16f,metrics).toInt(),
+                dpToPx(16f,metrics).toInt())
+            textSize = spToPx(16f,metrics)
             layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
@@ -40,8 +49,13 @@ class ViewGroupActivity : ComponentActivity() {
         val secondView = TextView(this).apply {
             text = "Second Child"
             setTextColor(Color.BLACK)
-            setPadding(16, 16, 16, 16)
-            textSize = 18f
+            setPadding(
+                dpToPx(16f,metrics).toInt(),
+                dpToPx(16f,metrics).toInt(),
+                dpToPx(16f,metrics).toInt(),
+                dpToPx(16f,metrics).toInt()
+            )
+            textSize = spToPx(16f,metrics)
             layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
