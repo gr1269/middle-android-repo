@@ -10,7 +10,6 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.util.TypedValueCompat.dpToPx
 import androidx.core.util.TypedValueCompat.spToPx
 import androidx.core.view.ViewCompat
@@ -41,9 +40,7 @@ class ViewGroupActivity : ComponentActivity() {
             layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                gravity = CENTER_HORIZONTAL
-            }
+            )
         }
 
         val secondView = TextView(this).apply {
@@ -59,9 +56,7 @@ class ViewGroupActivity : ComponentActivity() {
             layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                gravity = CENTER_HORIZONTAL
-            }
+            )
         }
 
         customContainer.addView(firstView)

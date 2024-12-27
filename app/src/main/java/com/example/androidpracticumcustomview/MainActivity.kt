@@ -12,7 +12,6 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import com.example.androidpracticumcustomview.ui.theme.CustomContainer
 import com.example.androidpracticumcustomview.ui.theme.MainScreen
 

@@ -33,6 +33,17 @@ class CustomContainer @JvmOverloads constructor(
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
+
+        for (i in 0 until childCount) {
+            val child = getChildAt(i)
+            val childLeft = (width - child.measuredWidth) / 2
+            child.layout(
+                childLeft,
+                child.top,
+                childLeft + child.measuredWidth,
+                child.bottom
+            )
+        }
     }
 
     override fun addView(child: View) {
