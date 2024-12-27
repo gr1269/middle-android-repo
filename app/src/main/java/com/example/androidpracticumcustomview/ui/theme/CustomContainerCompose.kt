@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
@@ -46,12 +47,13 @@ fun CustomContainerCompose(
         secondChildVisibility = true
     }
 
+    val density = LocalDensity.current
 
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
         val slideInYTop = animateDpAsState(
-            targetValue = if(firstChildVisibility) 0.dp else screenHeight/2, // Двигаемся к верхней части
+            targetValue = if(firstChildVisibility) 0.dp else screenHeight/2,
             animationSpec = tween(durationMillis = 5000)
         )
 
@@ -63,8 +65,12 @@ fun CustomContainerCompose(
         Box(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .offset(y = slideInYTop.value)
-                .graphicsLayer(alpha = fadeInFirst.value)
+                .graphicsLayer(
+                    alpha = fadeInFirst.value,
+                    translationY = with(density) {
+                        slideInYTop.value.toPx()
+                    }
+                )
         ) {
             if (firstChild != null) {
                 firstChild()
@@ -85,8 +91,12 @@ fun CustomContainerCompose(
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .offset(y = slideInYBottom.value)
-                .graphicsLayer(alpha = fadeInSecond.value)
+                .graphicsLayer(
+                    alpha = fadeInSecond.value,
+                    translationY = with(density) {
+                        slideInYBottom.value.toPx()
+                    }
+                )
         ) {
             if (secondChild != null) {
                 secondChild()

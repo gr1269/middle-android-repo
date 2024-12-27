@@ -13,10 +13,15 @@ import android.widget.FrameLayout
 Задание по желанию:
 Предусмотрите параметризацию длительности анимации.
  */
-
+const val OFFSET_DURATION: Long = 5000
+const val ALPHA_START = 0f
+const val ALPHA_END = 1f
+const val ALPHA_DURATION: Long = 1000
 class CustomContainer @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
+
+
 
     init {
         setWillNotDraw(false)
@@ -28,6 +33,17 @@ class CustomContainer @JvmOverloads constructor(
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
+
+        for (i in 0 until childCount) {
+            val child = getChildAt(i)
+            val childLeft = (width - child.measuredWidth) / 2
+            child.layout(
+                childLeft,
+                child.top,
+                childLeft + child.measuredWidth,
+                child.bottom
+            )
+        }
     }
 
     override fun addView(child: View) {
@@ -48,17 +64,17 @@ class CustomContainer @JvmOverloads constructor(
 
         val startPosition = height / 2f
 
-        child.alpha = 0f
+        child.alpha = ALPHA_START
         child.translationY = startPosition
 
         if (child == getChildAt(0)){
             child.animate()
                 .translationY(0f)
-                .setDuration(5000)
+                .setDuration(OFFSET_DURATION)
                 .withStartAction {
                     child.animate()
-                        .alpha(1f)
-                        .setDuration(1000)
+                        .alpha(ALPHA_END)
+                        .setDuration(ALPHA_DURATION)
                         .start()
                 }
                 .start()
@@ -66,11 +82,11 @@ class CustomContainer @JvmOverloads constructor(
         if (child == getChildAt(1)){
             child.animate()
                 .translationY(height.toFloat() - child.height.toFloat())
-                .setDuration(5000)
+                .setDuration(OFFSET_DURATION)
                 .withStartAction {
                     child.animate()
-                        .alpha(1f)
-                        .setDuration(1000)
+                        .alpha(ALPHA_END)
+                        .setDuration(ALPHA_DURATION)
                         .start()
                 }
                 .start()
